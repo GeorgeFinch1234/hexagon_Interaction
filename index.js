@@ -21,11 +21,14 @@ class line {
         this.moveLeft = 35
     }
     drawHexagons() {
+        
         draw(this.X, this.Y, this)
         this.moveLeft = this.moveLeft - 1;
         //so draws 3 lines
         if (!(this.moveLeft < 0)) {
             setTimeout(() => { this.drawHexagons() }, 15)
+            
+
         }
     }
 }
@@ -99,7 +102,7 @@ Math.ceil(clickXLocation/gridSize) - >put it on the grid,
     let positionY = Math.ceil(Y / gridSize) * gridSize
     let positionX = Math.ceil(X / gridSize) * gridSize
 
-
+    ctx.beginPath()
     ctx.moveTo(positionX, positionY)
     let gridX = chunkX(positionX);
     let gridY = chunkY(positionY);
@@ -450,3 +453,12 @@ as each row is just \__/-- to keep life simple
 
     ctx.stroke();
 }
+
+
+function fade(){
+    ctx.fillStyle = "rgb(0,0,0,0.04)"
+            ctx.fillRect(0, 0, window.innerWidth, window.innerHeight)
+            //after 1.5 seconds starts to fade away.
+            setTimeout(fade, 90)
+}
+fade()
