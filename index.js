@@ -6,15 +6,48 @@ const gridSize = 20;
 let clickXLocation = 0;
 let clickYLocation = 0;
 
+ ctx.fillStyle = "rgb(0,0,0)"
+        ctx.fillRect(0, 0, window.innerWidth, window.innerHeight)
+
+/*
+point is so class know how many time it has moves, so each click send say a line of and it does 3 movments
+*/
+
+class line{
+    constructor(initalX,initalY){
+        this.X = initalX
+        this.Y = initalY
+        //bascilly a base case for recursion
+        this.moveLeft = 35
+    }
+    drawHexagons(){
+        draw(this.X,this.Y,this)
+        this.moveLeft = this.moveLeft -1;
+        //so draws 3 lines
+        if(!(this.moveLeft <0)){
+            setTimeout(()=>{this.drawHexagons()},15)
+        } 
+    }
+}
+
+
 /*
 bascially sets where clint clicked then draws.
 */
+
 addEventListener("click", (e) => {
     clickXLocation = e.clientX
     clickYLocation = e.clientY
-    draw()
+     new line(clickXLocation,clickYLocation).drawHexagons()
+    
 })
+addEventListener("resize", () => {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+ ctx.fillStyle = "rgb(0,0,0)"
+        ctx.fillRect(0, 0, window.innerWidth, window.innerHeight)
 
+})
 /*
 acceptace x, as in x is the lovation you want to know what chunk it fall into.
 gets the chunk on the X axies at, 
@@ -36,6 +69,7 @@ function chunkX(x) {
     
     
     */
+   
     return (Math.round(x / gridSize) % 6);
 
 }
@@ -50,8 +84,10 @@ function chunkY(y) {
     return (Math.round(y / gridSize) % 2);
 }
 
-
-function draw() {
+/*
+x and y are the start location, line is an object so can uodate it for next run
+*/
+function draw(X, Y,Line) {
     /*
 Math.ceil - >rounds up so whole number 
 Math.ceil(clickXLocation/gridSize) - >put it on the grid, 
@@ -60,14 +96,14 @@ Math.ceil(clickXLocation/gridSize) - >put it on the grid,
     */
 
 
-    let postionY = Math.ceil(clickYLocation / gridSize) * gridSize
-    let postionX = Math.ceil(clickXLocation / gridSize) * gridSize
+    let postionY = Math.ceil(Y / gridSize) * gridSize
+    let postionX = Math.ceil(X / gridSize) * gridSize
 
 
     ctx.moveTo(postionX, postionY)
     let gridX = chunkX(postionX);
     let gridY = chunkY(postionY);
-    ctx.strokeStyle = "black";
+    ctx.strokeStyle = "white";
     ctx.lineWidth = 2;
 
     /*
@@ -101,7 +137,7 @@ as each row is just \__/-- to keep life sympole
         */
         
        if(gridY==0) {
-        console.log("x=0 y=0")
+        
         /*
       \__/--\__
         0 can go, lef, rightup right down
@@ -110,15 +146,21 @@ as each row is just \__/-- to keep life sympole
         if (pickingThree == 1) {
             //left
             ctx.lineTo(postionX - gridSize, postionY);
+            Line.X = postionX - gridSize
+           
         } else if (pickingThree == 2) {
             //right up
             ctx.lineTo(postionX + gridSize, postionY - gridSize);
+            Line.X = postionX + gridSize
+            Line.Y = postionY - gridSize
         } else {
             //rigth down
             ctx.lineTo(postionX + gridSize, postionY + gridSize);
+            Line.X = postionX + gridSize
+            Line.Y = postionY + gridSize
         }
 
-    }else{ console.log("x=0 y=1")
+    }else{ 
         ctx.moveTo(postionX, postionY + gridSize)
         /*
   \__/--\__
@@ -128,12 +170,18 @@ as each row is just \__/-- to keep life sympole
         if (pickingThree == 1) {
             //left
             ctx.lineTo(postionX - gridSize, postionY + gridSize);
+            Line.X = postionX - gridSize
+            Line.Y = postionY + gridSize
         } else if (pickingThree == 2) {
             //right up
             ctx.lineTo(postionX + gridSize, postionY);
+            Line.X = postionX + gridSize
+            
         } else {
             //right down
             ctx.lineTo(postionX + gridSize, postionY + gridSize + gridSize);
+            Line.X = postionX + gridSize
+            Line.Y = postionY + gridSize+gridSize
         }
 
 
@@ -143,7 +191,7 @@ as each row is just \__/-- to keep life sympole
     } else if (gridX == 1) {
        
        if(gridY==0) {
-       console.log("x=1 y=0")
+      
         /*
    \__/--\__
     1 can go right, left up, left down 
@@ -155,16 +203,22 @@ as each row is just \__/-- to keep life sympole
         if (pickingThree == 1) {
             //right
             ctx.lineTo(postionX + gridSize, postionY + gridSize);
+            Line.X = postionX + gridSize
+            Line.Y = postionY + gridSize
         } else if (pickingThree == 2) {
             //left up
             ctx.lineTo(postionX - gridSize, postionY);
+            Line.X = postionX - gridSize
+            
         } else {
             //left down
             ctx.lineTo(postionX - gridSize, postionY + gridSize + gridSize);
+            Line.X = postionX - gridSize
+            Line.Y = postionY - gridSize + gridSize
         }
 
     }else{
-    console.log("x=1 y=1")
+   
         /*
    \__/--\__
    4 can go righ, left down, left up
@@ -173,12 +227,18 @@ as each row is just \__/-- to keep life sympole
         if (pickingThree == 1) {
             //right
             ctx.lineTo(postionX + gridSize, postionY);
+            Line.X = postionX + gridSize
+            
         } else if (pickingThree == 2) {
             //left down
             ctx.lineTo(postionX - gridSize, postionY + gridSize);
+            Line.X = postionX - gridSize
+            Line.Y = postionY + gridSize
         } else {
             //left up
             ctx.lineTo(postionX - gridSize, postionY - gridSize);
+            Line.X = postionX - gridSize
+            Line.Y = postionY - gridSize
         }
 
 
@@ -189,7 +249,7 @@ as each row is just \__/-- to keep life sympole
 
     } else if (gridX == 2) {
         if(gridY==0) {
-            console.log("x=2 y=0")
+           
         /*
 \__/--\__
 2 can go left or right 
@@ -198,9 +258,13 @@ as each row is just \__/-- to keep life sympole
         if (pickingTwo == 1) {
             //left
             ctx.lineTo(postionX - gridSize, postionY + gridSize);
+            Line.X = postionX - gridSize
+            Line.Y = postionY + gridSize
         } else {
             //right
             ctx.lineTo(postionX + gridSize, postionY + gridSize);
+            Line.X = postionX + gridSize
+            Line.Y = postionY + gridSize
         }
     }else {console.log("x=2 y=1")
         /*
@@ -211,9 +275,13 @@ as each row is just \__/-- to keep life sympole
         if (pickingTwo == 1) {
             //right
             ctx.lineTo(postionX + gridSize, postionY);
+            Line.X = postionX + gridSize
+            
         } else {
             //left
             ctx.lineTo(postionX - gridSize, postionY);
+            Line.X = postionX - gridSize
+           
         }
     }
     } else if (gridX == 3) {
@@ -228,12 +296,18 @@ if(gridY==0) {
         if (pickingThree == 1) {
             //left
             ctx.lineTo(postionX - gridSize, postionY + gridSize);
+            Line.X = postionX - gridSize
+            Line.Y = postionY + gridSize
         } else if (pickingThree == 2) {
             //right up
             ctx.lineTo(postionX + gridSize, postionY);
+            Line.X = postionX + gridSize
+            
         } else {
             //right down
             ctx.lineTo(postionX + gridSize, postionY + gridSize + gridSize);
+            Line.X = postionX + gridSize
+            Line.Y = postionY + gridSize + gridSize
         }
 
 
@@ -251,12 +325,18 @@ if(gridY==0) {
         if (pickingThree == 1) {
             //left
             ctx.lineTo(postionX - gridSize, postionY);
+            Line.X = postionX - gridSize
+            
         } else if (pickingThree == 2) {
             //right up
             ctx.lineTo(postionX + gridSize, postionY - gridSize);
+            Line.X = postionX + gridSize
+            Line.Y = postionY - gridSize
         } else {
             //rigth down
             ctx.lineTo(postionX + gridSize, postionY + gridSize);
+            Line.X = postionX + gridSize
+            Line.Y = postionY + gridSize
         }
     }
     
@@ -274,12 +354,18 @@ else if(gridX==4){
         if (pickingThree == 1) {
             //right
             ctx.lineTo(postionX + gridSize, postionY);
+            Line.X = postionX + gridSize
+            
         } else if (pickingThree == 2) {
             //left down
             ctx.lineTo(postionX - gridSize, postionY + gridSize);
+            Line.X = postionX - gridSize
+            Line.Y = postionY + gridSize
         } else {
             //left up
             ctx.lineTo(postionX - gridSize, postionY - gridSize);
+            Line.X = postionX - gridSize
+            Line.Y = postionY - gridSize
         }
 
     }else{
@@ -295,12 +381,19 @@ console.log("x=4 y=1")
         if (pickingThree == 1) {
             //right
             ctx.lineTo(postionX + gridSize, postionY + gridSize);
+            Line.X = postionX + gridSize
+            Line.Y = postionY + gridSize
         } else if (pickingThree == 2) {
             //left up
             ctx.lineTo(postionX - gridSize, postionY);
+            Line.X = postionX - gridSize
+            
         } else {
             //left down
             ctx.lineTo(postionX - gridSize, postionY + gridSize + gridSize);
+             Line.X = postionX - gridSize
+            Line.Y = postionY + gridSize + gridSize
+            
         }
     }
 }
@@ -317,9 +410,13 @@ console.log("x=5 y=0")
         if (pickingTwo == 1) {
             //right
             ctx.lineTo(postionX + gridSize, postionY);
+             Line.X = postionX + gridSize
+            
         } else {
             //left
             ctx.lineTo(postionX - gridSize, postionY);
+             Line.X = postionX - gridSize
+            
         }
 
 
@@ -333,9 +430,13 @@ console.log("x=5 y=0")
         if (pickingTwo == 1) {
             //left
             ctx.lineTo(postionX - gridSize, postionY + gridSize);
+             Line.X = postionX - gridSize
+            Line.Y = postionY + gridSize
         } else {
             //right
             ctx.lineTo(postionX + gridSize, postionY + gridSize);
+             Line.X = postionX + gridSize
+            Line.Y = postionY + gridSize
         }
     }
 
