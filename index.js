@@ -18,7 +18,7 @@ class line {
         this.X = initialX
         this.Y = initialY
         //basically a base case for recursion
-        this.moveLeft = 35
+        this.moveLeft = 10
     }
     drawHexagons() {
         
@@ -51,6 +51,21 @@ addEventListener("resize", () => {
     ctx.fillRect(0, 0, window.innerWidth, window.innerHeight)
 
 })
+addEventListener("mousemove", (e) => {
+    clickXLocation = e.clientX
+    clickYLocation = e.clientY
+    new line(clickXLocation, clickYLocation).drawHexagons()
+
+})
+//to help with mobile. 
+addEventListener("touchmove", (e) => {
+    //to stop scrolling down screen.
+    e.preventDefault()
+    
+    clickXLocation = e.touches[0].clientX
+    clickYLocation = e.touches[0].clientY
+    new line(clickXLocation, clickYLocation).drawHexagons()
+}, { passive: true })
 /*
 acceptance x, as in x is the location you want to know what chunk it fall into.
 gets the chunk on the X axis at, 
@@ -456,9 +471,9 @@ as each row is just \__/-- to keep life simple
 
 
 function fade(){
-    ctx.fillStyle = "rgb(0,0,0,0.04)"
+    ctx.fillStyle = "rgb(0,0,0,0.05)"
             ctx.fillRect(0, 0, window.innerWidth, window.innerHeight)
             //after 1.5 seconds starts to fade away.
-            setTimeout(fade, 90)
+            setTimeout(fade, 60)
 }
 fade()
