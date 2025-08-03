@@ -14,10 +14,10 @@ point is so class know how many time it has moves, so each click send say a line
 */
 
 class line {
-    constructor(initalX, initalY) {
-        this.X = initalX
-        this.Y = initalY
-        //bascilly a base case for recursion
+    constructor(initialX, initialY) {
+        this.X = initialX
+        this.Y = initialY
+        //basically a base case for recursion
         this.moveLeft = 35
     }
     drawHexagons() {
@@ -32,7 +32,7 @@ class line {
 
 
 /*
-bascially sets where clint clicked then draws.
+basically sets where clint clicked then draws.
 */
 
 addEventListener("click", (e) => {
@@ -49,19 +49,19 @@ addEventListener("resize", () => {
 
 })
 /*
-acceptace x, as in x is the lovation you want to know what chunk it fall into.
-gets the chunk on the X axies at, 
+acceptance x, as in x is the location you want to know what chunk it fall into.
+gets the chunk on the X axis at, 
 returns a number between 0 and 5 indicating chunk on
 */
 function chunkX(x) {
     /*
-    Math.round-> this justy makes it so using whole number to make life easier 
-    x/gridsize -> without this the systemt would cicyle every 6 pixles not evey 6 chunks, this makes it work 
+    Math.round-> this just makes it so using whole number to make life easier 
+    x/gridsize -> without this the system would cycle every 6 pixels not every 6 chunks, this makes it work 
     on the chunks
     
     
     
-    %6-> so get the acaully grid chunk the user is on
+    %6-> so get the actually grid chunk the user is on
     
     ideas is the hexagon are just lines of \__/-- (last one image at top)
     so get to know which segment of it at, can then tell it what options it has, there are 6 sections hence mod 6
@@ -76,7 +76,7 @@ function chunkX(x) {
 /*
 
 same as chunkX but as line are off set return a 0 or 1
-why of set so give illusion of hexigon which is what i want.
+why of set so give illusion of hexagon which is what i want.
 \__/--\__
    \__/--
 */
@@ -85,7 +85,7 @@ function chunkY(y) {
 }
 
 /*
-x and y are the start location, line is an object so can uodate it for next run
+x and y are the start location, line is an object so can update it for next run
 */
 function draw(X, Y, Line) {
     /*
@@ -96,13 +96,13 @@ Math.ceil(clickXLocation/gridSize) - >put it on the grid,
     */
 
 
-    let postionY = Math.ceil(Y / gridSize) * gridSize
-    let postionX = Math.ceil(X / gridSize) * gridSize
+    let positionY = Math.ceil(Y / gridSize) * gridSize
+    let positionX = Math.ceil(X / gridSize) * gridSize
 
 
-    ctx.moveTo(postionX, postionY)
-    let gridX = chunkX(postionX);
-    let gridY = chunkY(postionY);
+    ctx.moveTo(positionX, positionY)
+    let gridX = chunkX(positionX);
+    let gridY = chunkY(positionY);
     ctx.strokeStyle = "white";
     ctx.lineWidth = 2;
 
@@ -119,13 +119,13 @@ Math.ceil(clickXLocation/gridSize) - >put it on the grid,
 0 can go, lef, rightup right down
 1 can go right, left up, left down 
 2 can go left or right 
-3 can go left, rigth up, or right down
-4 can go righ, left down, left up
-5 can go rigth or left
+3 can go left, right up, or right down
+4 can go right, left down, left up
+5 can go right or left
 
 
     */
-    //return 1,2 or3 eg the options that we have. it rounded so can used as wole int
+    //return 1,2 or3 eg the options that we have. it rounded so can used as whole int
     let pickingThree = Math.round(Math.random() * 3)
 
     let pickingTwo = Math.round(Math.random() * 2)
@@ -133,7 +133,7 @@ Math.ceil(clickXLocation/gridSize) - >put it on the grid,
         /*
 off set need to be by 3 places so if gridY = 1 then 0 = 3,1=4,2=5 and so on
 why 
-as each row is just \__/-- to keep life sympole
+as each row is just \__/-- to keep life simple
         */
 
         if (gridY == 0) {
@@ -145,43 +145,43 @@ as each row is just \__/-- to keep life sympole
 
             if (pickingThree == 1) {
                 //left
-                ctx.lineTo(postionX - gridSize, postionY);
-                Line.X = postionX - gridSize
+                ctx.lineTo(positionX - gridSize, positionY);
+                Line.X = positionX - gridSize
 
             } else if (pickingThree == 2) {
                 //right up
-                ctx.lineTo(postionX + gridSize, postionY - gridSize);
-                Line.X = postionX + gridSize
-                Line.Y = postionY - gridSize
+                ctx.lineTo(positionX + gridSize, positionY - gridSize);
+                Line.X = positionX + gridSize
+                Line.Y = positionY - gridSize
             } else {
-                //rigth down
-                ctx.lineTo(postionX + gridSize, postionY + gridSize);
-                Line.X = postionX + gridSize
-                Line.Y = postionY + gridSize
+                //right down
+                ctx.lineTo(positionX + gridSize, positionY + gridSize);
+                Line.X = positionX + gridSize
+                Line.Y = positionY + gridSize
             }
 
         } else {
-            ctx.moveTo(postionX, postionY + gridSize)
+            ctx.moveTo(positionX, positionY + gridSize)
             /*
       \__/--\__
-     3 can go left, rigth up, or right down
+     3 can go left, right up, or right down
           */
 
             if (pickingThree == 1) {
                 //left
-                ctx.lineTo(postionX - gridSize, postionY + gridSize);
-                Line.X = postionX - gridSize
-                Line.Y = postionY + gridSize
+                ctx.lineTo(positionX - gridSize, positionY + gridSize);
+                Line.X = positionX - gridSize
+                Line.Y = positionY + gridSize
             } else if (pickingThree == 2) {
                 //right up
-                ctx.lineTo(postionX + gridSize, postionY);
-                Line.X = postionX + gridSize
+                ctx.lineTo(positionX + gridSize, positionY);
+                Line.X = positionX + gridSize
 
             } else {
                 //right down
-                ctx.lineTo(postionX + gridSize, postionY + gridSize + gridSize);
-                Line.X = postionX + gridSize
-                Line.Y = postionY + gridSize + gridSize
+                ctx.lineTo(positionX + gridSize, positionY + gridSize + gridSize);
+                Line.X = positionX + gridSize
+                Line.Y = positionY + gridSize + gridSize
             }
 
 
@@ -199,46 +199,46 @@ as each row is just \__/-- to keep life sympole
         ideas is intial click get top line as starting point
         so as want to start lower have to ajust for that
         */
-            ctx.moveTo(postionX, postionY + gridSize)
+            ctx.moveTo(positionX, positionY + gridSize)
             if (pickingThree == 1) {
                 //right
-                ctx.lineTo(postionX + gridSize, postionY + gridSize);
-                Line.X = postionX + gridSize
-                Line.Y = postionY + gridSize
+                ctx.lineTo(positionX + gridSize, positionY + gridSize);
+                Line.X = positionX + gridSize
+                Line.Y = positionY + gridSize
             } else if (pickingThree == 2) {
                 //left up
-                ctx.lineTo(postionX - gridSize, postionY);
-                Line.X = postionX - gridSize
+                ctx.lineTo(positionX - gridSize, positionY);
+                Line.X = positionX - gridSize
 
             } else {
                 //left down
-                ctx.lineTo(postionX - gridSize, postionY + gridSize + gridSize);
-                Line.X = postionX - gridSize
-                Line.Y = postionY - gridSize + gridSize
+                ctx.lineTo(positionX - gridSize, positionY + gridSize + gridSize);
+                Line.X = positionX - gridSize
+                Line.Y = positionY - gridSize + gridSize
             }
 
         } else {
 
             /*
        \__/--\__
-       4 can go righ, left down, left up
+       4 can go right, left down, left up
            */
 
             if (pickingThree == 1) {
                 //right
-                ctx.lineTo(postionX + gridSize, postionY);
-                Line.X = postionX + gridSize
+                ctx.lineTo(positionX + gridSize, positionY);
+                Line.X = positionX + gridSize
 
             } else if (pickingThree == 2) {
                 //left down
-                ctx.lineTo(postionX - gridSize, postionY + gridSize);
-                Line.X = postionX - gridSize
-                Line.Y = postionY + gridSize
+                ctx.lineTo(positionX - gridSize, positionY + gridSize);
+                Line.X = positionX - gridSize
+                Line.Y = positionY + gridSize
             } else {
                 //left up
-                ctx.lineTo(postionX - gridSize, postionY - gridSize);
-                Line.X = postionX - gridSize
-                Line.Y = postionY - gridSize
+                ctx.lineTo(positionX - gridSize, positionY - gridSize);
+                Line.X = positionX - gridSize
+                Line.Y = positionY - gridSize
             }
 
 
@@ -254,60 +254,60 @@ as each row is just \__/-- to keep life sympole
     \__/--\__
     2 can go left or right 
     */
-            ctx.moveTo(postionX, postionY + gridSize)
+            ctx.moveTo(positionX, positionY + gridSize)
             if (pickingTwo == 1) {
                 //left
-                ctx.lineTo(postionX - gridSize, postionY + gridSize);
-                Line.X = postionX - gridSize
-                Line.Y = postionY + gridSize
+                ctx.lineTo(positionX - gridSize, positionY + gridSize);
+                Line.X = positionX - gridSize
+                Line.Y = positionY + gridSize
             } else {
                 //right
-                ctx.lineTo(postionX + gridSize, postionY + gridSize);
-                Line.X = postionX + gridSize
-                Line.Y = postionY + gridSize
+                ctx.lineTo(positionX + gridSize, positionY + gridSize);
+                Line.X = positionX + gridSize
+                Line.Y = positionY + gridSize
             }
         } else {
             /*
         \__/--\__
-        5 can go rigth or left
+        5 can go right or left
             */
 
             if (pickingTwo == 1) {
                 //right
-                ctx.lineTo(postionX + gridSize, postionY);
-                Line.X = postionX + gridSize
+                ctx.lineTo(positionX + gridSize, positionY);
+                Line.X = positionX + gridSize
 
             } else {
                 //left
-                ctx.lineTo(postionX - gridSize, postionY);
-                Line.X = postionX - gridSize
+                ctx.lineTo(positionX - gridSize, positionY);
+                Line.X = positionX - gridSize
 
             }
         }
     } else if (gridX == 3) {
         if (gridY == 0) {
 
-            ctx.moveTo(postionX, postionY + gridSize)
+            ctx.moveTo(positionX, positionY + gridSize)
             /*
       \__/--\__
-     3 can go left, rigth up, or right down
+     3 can go left, right up, or right down
           */
 
             if (pickingThree == 1) {
                 //left
-                ctx.lineTo(postionX - gridSize, postionY + gridSize);
-                Line.X = postionX - gridSize
-                Line.Y = postionY + gridSize
+                ctx.lineTo(positionX - gridSize, positionY + gridSize);
+                Line.X = positionX - gridSize
+                Line.Y = positionY + gridSize
             } else if (pickingThree == 2) {
                 //right up
-                ctx.lineTo(postionX + gridSize, postionY);
-                Line.X = postionX + gridSize
+                ctx.lineTo(positionX + gridSize, positionY);
+                Line.X = positionX + gridSize
 
             } else {
                 //right down
-                ctx.lineTo(postionX + gridSize, postionY + gridSize + gridSize);
-                Line.X = postionX + gridSize
-                Line.Y = postionY + gridSize + gridSize
+                ctx.lineTo(positionX + gridSize, positionY + gridSize + gridSize);
+                Line.X = positionX + gridSize
+                Line.Y = positionY + gridSize + gridSize
             }
 
 
@@ -324,19 +324,19 @@ as each row is just \__/-- to keep life sympole
 
             if (pickingThree == 1) {
                 //left
-                ctx.lineTo(postionX - gridSize, postionY);
-                Line.X = postionX - gridSize
+                ctx.lineTo(positionX - gridSize, positionY);
+                Line.X = positionX - gridSize
 
             } else if (pickingThree == 2) {
                 //right up
-                ctx.lineTo(postionX + gridSize, postionY - gridSize);
-                Line.X = postionX + gridSize
-                Line.Y = postionY - gridSize
+                ctx.lineTo(positionX + gridSize, positionY - gridSize);
+                Line.X = positionX + gridSize
+                Line.Y = positionY - gridSize
             } else {
-                //rigth down
-                ctx.lineTo(postionX + gridSize, postionY + gridSize);
-                Line.X = postionX + gridSize
-                Line.Y = postionY + gridSize
+                //right down
+                ctx.lineTo(positionX + gridSize, positionY + gridSize);
+                Line.X = positionX + gridSize
+                Line.Y = positionY + gridSize
             }
         }
 
@@ -348,24 +348,24 @@ as each row is just \__/-- to keep life sympole
 
             /*
        \__/--\__
-       4 can go righ, left down, left up
+       4 can go right, left down, left up
            */
 
             if (pickingThree == 1) {
                 //right
-                ctx.lineTo(postionX + gridSize, postionY);
-                Line.X = postionX + gridSize
+                ctx.lineTo(positionX + gridSize, positionY);
+                Line.X = positionX + gridSize
 
             } else if (pickingThree == 2) {
                 //left down
-                ctx.lineTo(postionX - gridSize, postionY + gridSize);
-                Line.X = postionX - gridSize
-                Line.Y = postionY + gridSize
+                ctx.lineTo(positionX - gridSize, positionY + gridSize);
+                Line.X = positionX - gridSize
+                Line.Y = positionY + gridSize
             } else {
                 //left up
-                ctx.lineTo(postionX - gridSize, postionY - gridSize);
-                Line.X = postionX - gridSize
-                Line.Y = postionY - gridSize
+                ctx.lineTo(positionX - gridSize, positionY - gridSize);
+                Line.X = positionX - gridSize
+                Line.Y = positionY - gridSize
             }
 
         } else {
@@ -377,22 +377,22 @@ as each row is just \__/-- to keep life sympole
         ideas is intial click get top line as starting point
         so as want to start lower have to ajust for that
         */
-            ctx.moveTo(postionX, postionY + gridSize)
+            ctx.moveTo(positionX, positionY + gridSize)
             if (pickingThree == 1) {
                 //right
-                ctx.lineTo(postionX + gridSize, postionY + gridSize);
-                Line.X = postionX + gridSize
-                Line.Y = postionY + gridSize
+                ctx.lineTo(positionX + gridSize, positionY + gridSize);
+                Line.X = positionX + gridSize
+                Line.Y = positionY + gridSize
             } else if (pickingThree == 2) {
                 //left up
-                ctx.lineTo(postionX - gridSize, postionY);
-                Line.X = postionX - gridSize
+                ctx.lineTo(positionX - gridSize, positionY);
+                Line.X = positionX - gridSize
 
             } else {
                 //left down
-                ctx.lineTo(postionX - gridSize, postionY + gridSize + gridSize);
-                Line.X = postionX - gridSize
-                Line.Y = postionY + gridSize + gridSize
+                ctx.lineTo(positionX - gridSize, positionY + gridSize + gridSize);
+                Line.X = positionX - gridSize
+                Line.Y = positionY + gridSize + gridSize
 
             }
         }
@@ -404,18 +404,18 @@ as each row is just \__/-- to keep life sympole
 
             /*
         \__/--\__
-        5 can go rigth or left
+        5 can go right or left
             */
 
             if (pickingTwo == 1) {
                 //right
-                ctx.lineTo(postionX + gridSize, postionY);
-                Line.X = postionX + gridSize
+                ctx.lineTo(positionX + gridSize, positionY);
+                Line.X = positionX + gridSize
 
             } else {
                 //left
-                ctx.lineTo(postionX - gridSize, postionY);
-                Line.X = postionX - gridSize
+                ctx.lineTo(positionX - gridSize, positionY);
+                Line.X = positionX - gridSize
 
             }
 
@@ -426,17 +426,17 @@ as each row is just \__/-- to keep life sympole
     \__/--\__
     2 can go left or right 
     */
-            ctx.moveTo(postionX, postionY + gridSize)
+            ctx.moveTo(positionX, positionY + gridSize)
             if (pickingTwo == 1) {
                 //left
-                ctx.lineTo(postionX - gridSize, postionY + gridSize);
-                Line.X = postionX - gridSize
-                Line.Y = postionY + gridSize
+                ctx.lineTo(positionX - gridSize, positionY + gridSize);
+                Line.X = positionX - gridSize
+                Line.Y = positionY + gridSize
             } else {
                 //right
-                ctx.lineTo(postionX + gridSize, postionY + gridSize);
-                Line.X = postionX + gridSize
-                Line.Y = postionY + gridSize
+                ctx.lineTo(positionX + gridSize, positionY + gridSize);
+                Line.X = positionX + gridSize
+                Line.Y = positionY + gridSize
             }
         }
 
