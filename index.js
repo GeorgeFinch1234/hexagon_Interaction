@@ -101,6 +101,7 @@ as each row is just \__/-- to keep life sympole
         */
         
        if(gridY==0) {
+        console.log("x=0 y=0")
         /*
       \__/--\__
         0 can go, lef, rightup right down
@@ -117,12 +118,11 @@ as each row is just \__/-- to keep life sympole
             ctx.lineTo(postionX + gridSize, postionY + gridSize);
         }
 
-    }else{
-        // this is normal if version 3
-          ctx.moveTo(postionX, postionY + gridSize)
+    }else{ console.log("x=0 y=1")
+        ctx.moveTo(postionX, postionY + gridSize)
         /*
   \__/--\__
-  can go left, rigth up, or right down
+ 3 can go left, rigth up, or right down
       */
 
         if (pickingThree == 1) {
@@ -136,11 +136,14 @@ as each row is just \__/-- to keep life sympole
             ctx.lineTo(postionX + gridSize, postionY + gridSize + gridSize);
         }
 
-    }
+
+        }
+
+    
     } else if (gridX == 1) {
        
        if(gridY==0) {
-       
+       console.log("x=1 y=0")
         /*
    \__/--\__
     1 can go right, left up, left down 
@@ -161,7 +164,7 @@ as each row is just \__/-- to keep life sympole
         }
 
     }else{
-        
+    console.log("x=1 y=1")
         /*
    \__/--\__
    4 can go righ, left down, left up
@@ -186,6 +189,7 @@ as each row is just \__/-- to keep life sympole
 
     } else if (gridX == 2) {
         if(gridY==0) {
+            console.log("x=2 y=0")
         /*
 \__/--\__
 2 can go left or right 
@@ -198,10 +202,10 @@ as each row is just \__/-- to keep life sympole
             //right
             ctx.lineTo(postionX + gridSize, postionY + gridSize);
         }
-    }else {
-             /*
+    }else {console.log("x=2 y=1")
+        /*
     \__/--\__
-     can go rigth or left
+    5 can go rigth or left
         */
 
         if (pickingTwo == 1) {
@@ -214,6 +218,7 @@ as each row is just \__/-- to keep life sympole
     }
     } else if (gridX == 3) {
 if(gridY==0) {
+    console.log("x=3 y=0")
         ctx.moveTo(postionX, postionY + gridSize)
         /*
   \__/--\__
@@ -237,31 +242,30 @@ if(gridY==0) {
 
 
     }else{
-         
+     console.log("x=3 y=1")
         /*
-   \__/--\__
-    can go right, left up, left down 
-     
-    ideas is intial click get top line as starting point
-    so as want to start lower have to ajust for that
-    */
-        ctx.moveTo(postionX, postionY + gridSize)
+      \__/--\__
+        0 can go, lef, rightup right down
+          */
+
         if (pickingThree == 1) {
-            //right
-            ctx.lineTo(postionX + gridSize, postionY + gridSize);
-        } else if (pickingThree == 2) {
-            //left up
+            //left
             ctx.lineTo(postionX - gridSize, postionY);
+        } else if (pickingThree == 2) {
+            //right up
+            ctx.lineTo(postionX + gridSize, postionY - gridSize);
         } else {
-            //left down
-            ctx.lineTo(postionX - gridSize, postionY + gridSize + gridSize);
+            //rigth down
+            ctx.lineTo(postionX + gridSize, postionY + gridSize);
         }
     }
+    
 
+    }
 
-    } else if (gridX == 4) {
-if(gridY==0) {
-
+else if(gridX==4){
+    if(gridY==0){
+ console.log("x=4 y=0")
         /*
    \__/--\__
    4 can go righ, left down, left up
@@ -278,13 +282,11 @@ if(gridY==0) {
             ctx.lineTo(postionX - gridSize, postionY - gridSize);
         }
 
-
-
-
     }else{
-           /*
+console.log("x=4 y=1")
+        /*
    \__/--\__
-    can go right, left up, left down 
+    1 can go right, left up, left down 
      
     ideas is intial click get top line as starting point
     so as want to start lower have to ajust for that
@@ -301,14 +303,12 @@ if(gridY==0) {
             ctx.lineTo(postionX - gridSize, postionY + gridSize + gridSize);
         }
     }
+}
 
 
-
-
-
-    } else if (gridX == 5) {
+     else if (gridX == 5) {
 if(gridY==0) {
-
+console.log("x=5 y=0")
         /*
     \__/--\__
     5 can go rigth or left
@@ -324,9 +324,10 @@ if(gridY==0) {
 
 
     }else{
-         /*
+        console.log("x=5 y=1")
+        /*
 \__/--\__
-can go left or right 
+2 can go left or right 
 */
         ctx.moveTo(postionX, postionY + gridSize)
         if (pickingTwo == 1) {
