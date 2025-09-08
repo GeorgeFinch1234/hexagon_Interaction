@@ -1,4 +1,4 @@
-# Dot Connection
+# Hexagon Interaction
 A lightweight, interactive web project built for fun and practice with the HTML5 <canvas> element. On each mouse movement, it generates animated, randomized paths that mimic the structure of hexagons. 
 This experiment explores grid-based drawing, recursion, and dynamic rendering logic using raw JavaScript — no frameworks, just the canvas API and imagination. 
 ## Table of content
